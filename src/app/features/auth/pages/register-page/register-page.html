@@ -1,1 +1,49 @@
-<p>register-page works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="firstName">firstName: </label>
+    <input formControlName="firstName" type="text" id="firstName" class="form-control" />
+    @if (firstName.touched && firstName.invalid){
+    @if(registerForm.get("firstName")?.getError("required")){
+    <p>firstname required</p>
+    }@else if (firstName.getError("minlength")|| firstName.getError("maxlength")) {
+    <p>firstname not between 2 and 50 characters min</p>
+    } }
+  </div>
+  <div class="form-group">
+    <label for="lastname">lastname: </label>
+    <input formControlName="lastName" type="text" id="lastname" class="form-control" />
+    @if(lastName.touched && lastName.invalid) { @if(lastName.getError("required")){
+    <p>lastname required</p>
+    }@else if (lastName.getError("minlength")||lastName.getError("maxlength")) {
+    <p>lastName not between 2 and 50 characters</p>
+    } }
+  </div>
+  <div class="form-group">
+    <label for="email">email: </label>
+    <input formControlName="email" type="email" id="email" class="form-control" />
+    @if (email.touched && email.invalid) { @if (email.getError('required')) {
+    <p>Email required</p>
+    } @else if (email.getError('email')) {
+    <p>Invalid email format</p>
+    } }
+  </div>
+  <div class="form-group">
+    <label for="password">password: </label>
+    <input formControlName="password" type="password" id="password" class="form-control" />
+    @if (password.touched && password.invalid) { @if (password.getError('required')) {
+    <p>Password required</p>
+    } @else { @for (err of objectKeys(password.errors!); track $index) { @switch (err) { @case
+    ('lowerCase') {
+    <p>Password must include at least 1 lowercase</p>
+    } @case ('upperCase') {
+    <p>Password must include at least 1 uppercase</p>
+    } @case ('number') {
+    <p>Password must include at least 1 number</p>
+    } @case ('specialCharacter') {
+    <p>Password must include at least 1 special character</p>
+    } @case ('tooShort') {
+    <p>Password must be at least 8 characters long</p>
+    } } } } }
+  </div>
+  <button [disabled]="registerForm.invalid" type="submit">submit</button>
+</form>
