@@ -5,10 +5,12 @@ import { UserRegisterForm } from '@core/models/user-register.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private _isConntected = signal<boolean>(false);
+  private _isConntected = signal<boolean>(true);
   isConnected: Signal<boolean> = this._isConntected.asReadonly();
 
-  login() {
+  login(email: String, password: String) {
+    console.log('logged in: ', email, password);
+
     this._isConntected.set(true);
     // TODO call aPI avec credential
     // récuperation du JWT

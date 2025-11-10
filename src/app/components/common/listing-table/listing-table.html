@@ -1,0 +1,24 @@
+<ul>
+  @for(e of elements(); track e.id){
+  <li>{{ e | json }} <button (click)="onDetails(e.id)">details</button></li>
+  }
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      @for (col of columns(); track $index) {
+      <th>{{ col }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (e of elements(); track e.id) {
+    <tr>
+      @for (col of columns(); track $index) {
+      <td>{{ e[col] | json }}</td>
+      }
+    </tr>
+    }
+  </tbody>
+</table>
